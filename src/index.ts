@@ -8,9 +8,9 @@ import channelRoutes from "./routes/channelRoutes";
 import packRoutes from "./routes/packRoutes";
 import subscriptionRoutes from "./routes/subscriptionRoutes";
 import { appDataSource } from "./dataSource";
-const port = process.env.PORT || 8080;
+const port = process.env.PORT ?? 8080;
 const app = express();
-// import ("./utils/schedule");
+import ("./utils/schedule");
 
 import postmanToOpenApi from 'postman-to-openapi';
 import path from "path";
@@ -30,7 +30,7 @@ postmanToOpenApi(
     "src/postman/DTH.json",
     path.join("src/postman/swagger.yml"),
     {defaultTag:"General"}
-).then((Response)=>{
+).then(()=>{
     let result=YAML.load("src/postman/swagger.yml");
     result.servers[0].url="/";
     app.use("/swagger",swaggerUi.serve, swaggerUi.setup(result));
@@ -38,8 +38,8 @@ postmanToOpenApi(
 
 appDataSource.initialize().then(()=> {
     console.log("mysql connected")
-    app.listen(5600, ()=> {
-    console.log(`server is running on port 5600`)
+    app.listen(port, ()=> {
+    console.log(`server is running on port ${port}`)
 })
 }).catch((error)=>{
     console.log(error)

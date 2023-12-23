@@ -6,3 +6,8 @@ export interface UserInterface{
     role:string,
     active:boolean,
 }
+
+export interface PayloadInterface{
+    id:number,
+    email:string
+}

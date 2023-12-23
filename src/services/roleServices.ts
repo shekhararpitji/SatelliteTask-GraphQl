@@ -1,3 +1,4 @@
+import { UserInterface } from "./../interfaces.td";
 import { Request, Response } from "express";
 
 import bcrypt from "bcryptjs";
@@ -23,7 +24,7 @@ export const registerService = async (req: Request, res: Response) => {
       res.status(409).send({ message: "Email already register" });
     }
     const hashPassword = await bcrypt.hash(password, 10);
-    const user =await curr_User.create({
+    const user = curr_User.create({
       name,
       email,
       password: hashPassword,
@@ -32,7 +33,7 @@ export const registerService = async (req: Request, res: Response) => {
       active,
     });
 
-    const saveUser=await appDataSource.manager.save(user);
+    const saveUser = await appDataSource.manager.save(user);
 
     if (!saveUser) {
       res.status(404).json({ message: "Not found" });
@@ -43,25 +44,25 @@ export const registerService = async (req: Request, res: Response) => {
   }
 };
 
-export const loginService = async (email:string, password:string,res:Response) => {
-  
-
+export const loginService = async (
+  email: string,
+  password: string,
+  res: Response
+) => {
   const user = await curr_User.findOneBy({
     email,
   });
-  
+
   if (!user) {
     return res.status(404).json({ message: "Not found" });
-  } 
-  const result= await bcrypt.compare(password, user?.password);
-   if (result) {
-  return  res.status(404).json({ message: "Wrong password" });
-  }else{
-    const access_token = createToken(user.id,user.email);
-    return { access_token };
   }
-
- 
+  const result = bcrypt.compare(password, user.password);
+  if (!result) {
+    return res.status(404).json({ message: "Wrong password" });
+  } else {
+    const access_token = createToken(user.id, user.email);
+    return access_token;
+  }
 };
 
 export const get1Service = async (id: number) => {

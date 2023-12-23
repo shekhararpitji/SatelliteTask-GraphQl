@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { appDataSource } from "../dataSource";
 
-const curr_User = appDataSource.getRepository(User);
 
 import{
   loginService,
@@ -11,6 +10,7 @@ import{
 import { validateToken } from "../utils/authUtil";
 import { User } from "../entity/User";
 
+const curr_User = appDataSource.getRepository(User);
 export const registerCtrl = async (req:Request, res:Response) => {
  try{
    const user= await registerService(req, res);
@@ -25,7 +25,7 @@ export const registerCtrl = async (req:Request, res:Response) => {
 export const loginCtrl = async (req:Request, res:Response) => {
   try {
     const { email, password } = req.body;
-    const { access_token } = await loginService(email, password, res);
+    const access_token  = await loginService(email, password, res);
     res.status(200).json({ jwt: access_token });
   } catch (error) {
     console.error(error);

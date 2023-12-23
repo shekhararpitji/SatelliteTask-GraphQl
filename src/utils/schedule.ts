@@ -1,14 +1,15 @@
-import cron from "cron";
+import {CronJob} from "cron";
 import {
-  checkExpireSubscriptions,
+  monthlyExpireSubscriptions, yearlyExpireSubscriptions,
 } from "../services/subscriptionServices";
 
 const executeSwarm = async () => {
   try {
-    await checkExpireSubscriptions();
+    await monthlyExpireSubscriptions();
+    await yearlyExpireSubscriptions();
   } catch (error) {
     console.error("An error occurred:", error);
   }
 };
-const job = new cron.CronJob("*/59 * * * *", executeSwarm);
+const job = new CronJob("*/59 * * * *", executeSwarm);
 job.start();

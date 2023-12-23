@@ -20,7 +20,7 @@ import {
     category!: string
   
     @Column()
-    duration!: string
+    description!: string
 
     @ManyToOne(() => Package, (pack) => pack.channels)
     pack!: Package

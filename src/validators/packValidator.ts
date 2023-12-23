@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import Joi from "joi";
 
@@ -16,7 +16,7 @@ export const validateAddPackage = (req:Request, res:Response, next:NextFunction)
     console.error(error);
     return res.status(400).json({ error: error.details[0].message });
   }
-req.body=value;
+  req.body = value;
   return next();
 };
 

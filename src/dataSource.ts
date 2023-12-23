@@ -8,10 +8,11 @@ import dotenv from 'dotenv'
 dotenv.config();
 export const appDataSource= new DataSource({
 type:"mysql",
-host:"localhost",
-username:process.env.username,
+host:"127.0.0.1",
+username:process.env.user,
 password:process.env.password,
 database:process.env.database,
+port:3307,
 synchronize:true,
 entities:[User,Subscription,Package,Channel],
 

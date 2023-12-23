@@ -13,7 +13,7 @@ import { Package } from "./Package"
     id!: number
   
     @Column()
-    startDAte!: string
+    startDate!: Date
   
     @Column()
     userId!: number

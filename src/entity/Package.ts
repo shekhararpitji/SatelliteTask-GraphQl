@@ -17,7 +17,7 @@ export class Package {
   name!: string;
 
   @Column()
-  category!: number;
+  category!: string;
 
   @Column()
   price!: number;

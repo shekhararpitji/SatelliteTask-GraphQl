@@ -15,10 +15,13 @@ import { Subscription } from "./Subscription"
     email!: string
   
     @Column()
-    password!: number
+    name!: string
+  
+    @Column()
+    password!: string
 
     @Column()
-    mobile_number!: number
+    mobile_number!: string
 
     @Column()
     role!: string

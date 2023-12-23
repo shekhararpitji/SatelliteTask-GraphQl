@@ -46,7 +46,9 @@ export const getAllChannel = async (req:Request, res:Response): Promise<void>  =
 
 export const deleteChannel = async (req:Request, res:Response): Promise<void>  => {
   try {
-    const channel = await deleteChannelServices(req);
+    const { id } = req.params;
+
+    const channel = await deleteChannelServices(+id);
     if (!channel) {
        res.status(404).json({ message: "Channel not found " });
     }
