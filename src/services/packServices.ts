@@ -1,8 +1,10 @@
 import { Package } from "../entity/Package";
 import { appDataSource } from "../dataSource";
+import { Request } from "express";
 const curr_Package = appDataSource.getRepository(Package);
 
-export const addPackageServices = async (  name:string, category:string, duration:string, price:number ) => {
+export const addPackageServices = async (req: Request) => {
+  const { name, category, duration, price } = req.body;
 
   const pack = curr_Package.create({ name, category, duration, price });
 
@@ -14,11 +16,6 @@ export const get1PackageServices = async (id: number) => {
   const pack = await curr_Package.findOneBy({
     id,
   });
-  return pack;
-};
-
-export const getAllPackageServices = async () => {
-  const pack = await curr_Package.find();
   return pack;
 };
 

@@ -1,28 +1,23 @@
 import { Request, Response } from "express";
+import { appDataSource } from "../dataSource";
 
-import {
-  deletePackageServices,
-  get1PackageServices,
-  addPackageServices,
-  getAllPackageServices,
-} from "../services/packServices";
+import { deletePackageServices, get1PackageServices, addPackageServices } from "../services/packServices";
+import { Package } from "../entity/Package";
+const curr_Package = appDataSource.getRepository(Package);
 
-export const addPackage = async (req: Request, res: Response) => {
-  try {
-    const { name, category, duration, price } = req.body;
-    const Package = await addPackageServices(name, category, duration, price);
-    return res
-      .status(201)
-      .json({ message: "Package Added Successfully", Package });
+export const addPackage = async (req:Request, res:Response) => {
+  try{
+    const Package= await addPackageServices(req);
+    return res.status(201).json({ message: "Package Added Successfully",Package });
   } catch (error) {
     return res.status(500).json({ message: error });
   }
 };
 
-export const getSinglePackage = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const Package = await get1PackageServices(+id);
+export const getSinglePackage = async (req:Request, res:Response) => {
+ try{ 
+  const {id}=req.params;
+  const Package=await get1PackageServices(+id);
 
     return res
       .status(200)
@@ -32,9 +27,9 @@ export const getSinglePackage = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllPackage = async (req: Request, res: Response) => {
+export const getAllPackage = async (req:Request, res:Response) => {
   try {
-    const Packages = await getAllPackageServices();
+    const Packages = await curr_Package.find();
     if (!Packages) {
       return res.status(404).json({ message: "Package not found " });
     }
@@ -46,10 +41,10 @@ export const getAllPackage = async (req: Request, res: Response) => {
   }
 };
 
-export const deletePackage = async (req: Request, res: Response) => {
+export const deletePackage = async (req:Request, res:Response) => {
   try {
-    const { id } = req.params;
-    const Package = await deletePackageServices(+id);
+    const {id}=req.params;
+    const Package=await deletePackageServices(+id);
     return res
       .status(200)
       .json({ message: "Packages Deleted Sucessfully", Package });
@@ -57,3 +52,4 @@ export const deletePackage = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
+

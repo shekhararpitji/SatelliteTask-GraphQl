@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { JwtPayload, Secret } from 'jsonwebtoken';
+import { Secret } from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import JWT from "jsonwebtoken";
@@ -19,7 +19,7 @@ export const validateToken = async (req:Request) => {
   if (!token) {
     throw new Error('Token is not defined');
   }
-  const payload: string|JwtPayload= JWT.verify(token, secretKey);
-  return payload as PayloadInterface;
+  const payload = JWT.verify(token, secretKey);
+  return payload;
 };
   
