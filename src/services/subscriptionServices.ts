@@ -9,8 +9,7 @@ const curr_Package = appDataSource.getRepository(Package);
 const curr_User = appDataSource.getRepository(User);
 export const subscribePackageService = async (
   userId: number,
-  packId: number,
-  res: Response
+  packId: number
 ) => {
   try {
     const user = await curr_User.findOneBy({ id: userId });
@@ -126,4 +125,9 @@ export const monthlyExpireSubscriptions = async () => {
   } catch (error) {
     console.error(`Failed to check and expire subscriptions: ${error}`);
   }
+};
+
+export const getSubscription = async (id: number) => {
+  const subscription = await curr_Subscription.find({ where: { userId: id } });
+  return subscription;
 };
