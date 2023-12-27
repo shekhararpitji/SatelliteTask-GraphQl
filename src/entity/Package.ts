@@ -25,12 +25,10 @@ export class Package {
   @Column()
   duration!: string;
 
-  @OneToMany(() => Channel, (channel) => channel.pack, {cascade:true})
+  @OneToMany(() => Channel, (channel) => channel.pack, { cascade: true })
   @JoinTable()
   channels!: Channel[];
 
-  @OneToMany(()=>Subscription , (subscription)=> subscription.package)
-  subscription!:Subscription[]
-
-
+  @OneToMany(() => Subscription, (subscription) => subscription.package)
+  subscription!: Subscription[];
 }
