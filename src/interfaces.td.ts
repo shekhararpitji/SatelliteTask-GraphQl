@@ -11,3 +11,8 @@ export interface PayloadInterface{
     id:number,
     email:string
 }
+
+export interface isValid{
+    isLogin:boolean,
+    role:string
+}

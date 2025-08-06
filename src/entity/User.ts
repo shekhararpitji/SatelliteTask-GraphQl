@@ -1,35 +1,31 @@
-import {
-    Column,
-    Entity,
-    OneToMany,
-    PrimaryGeneratedColumn,
-  } from "typeorm"
-import { Subscription } from "./Subscription"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Subscription } from "./Subscription";
 
-  @Entity()
-  export class User {
-    @PrimaryGeneratedColumn()
-    id!: number
-  
-    @Column()
-    email!: string
-  
-    @Column()
-    name!: string
-  
-    @Column()
-    password!: string
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column()
-    mobile_number!: string
+  @Column()
+  email!: string;
 
-    @Column()
-    role!: string
+  @Column()
+  name!: string;
 
-    @Column()
-    active!: boolean
+  @Column()
+  password!: string;
 
-    @OneToMany(()=> Subscription, (subscription)=> subscription.user, { cascade:true})
-    subscription!: Subscription[];
-  
-  }
+  @Column()
+  mobile_number!: string;
+
+  @Column()
+  role!: string;
+
+  @Column()
+  active!: boolean;
+
+  @OneToMany(() => Subscription, (subscription) => subscription.user, {
+    cascade: true,
+  })
+  subscription!: Subscription[];
+}
